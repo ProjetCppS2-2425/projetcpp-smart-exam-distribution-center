@@ -396,6 +396,19 @@ background-color:transparent;
        </property>
       </item>
      </widget>
+     <widget class="QPushButton" name="pushButton_6">
+      <property name="geometry">
+       <rect>
+        <x>750</x>
+        <y>80</y>
+        <width>111</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Valider</string>
+      </property>
+     </widget>
      <widget class="QLineEdit" name="idExam">
       <property name="geometry">
        <rect>
@@ -471,7 +484,7 @@ background-color:transparent;
      <x>0</x>
      <y>0</y>
      <width>1442</width>
-     <height>18</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

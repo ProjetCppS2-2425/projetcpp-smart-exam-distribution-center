@@ -204,4 +204,4 @@ void MainWindow::on_trier_Butoon_clicked()
     // Sort the QTableWidget by the "Sujet" column
     ui->tableWidget_examens->sortItems(2, order); // Assuming "Sujet" is the 3rd column (index 2)
 }
-
+//nheeeb nrawah l medenine X(

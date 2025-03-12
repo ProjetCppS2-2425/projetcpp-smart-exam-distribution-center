@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 15.0.1, 2025-03-11T00:27:27. -->
+<!-- Written by QtCreator 15.0.1, 2025-03-12T02:11:29. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -246,7 +246,7 @@
     <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph &quot;dwarf,4096&quot; -F 250</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Atelier_Connexion2</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/Pc/Desktop/2eme/QT/CRUD/Atelier_Connexion/Atelier_Connexion.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/Pc/Desktop/qtt/wetransfer_rayen_2025-03-10_2229/rayen/Atelier_Connexion/Atelier_Connexion.pro</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
