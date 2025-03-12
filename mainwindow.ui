@@ -1,0 +1,1245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1548</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1331</width>
+      <height>641</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(94, 83, 255);
+background-color: rgb(203, 221, 255);
+
+</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>centre d'examen</string>
+     </attribute>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-30</y>
+        <width>1321</width>
+        <height>631</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(94, 83, 255);
+background-color: rgb(203, 221, 255);</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Acceuil</string>
+       </attribute>
+       <widget class="QPushButton" name="pushButton_modifier">
+        <property name="geometry">
+         <rect>
+          <x>720</x>
+          <y>370</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Modifier</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>../../../../../Downloads/461508595_825905609429817_3860263783025879477_n.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>1120</x>
+          <y>80</y>
+          <width>141</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Trier</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>../../../../../Downloads/461484528_521659267261567_8640738131585914016_n.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_supprimer">
+        <property name="geometry">
+         <rect>
+          <x>1010</x>
+          <y>370</y>
+          <width>121</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Supprimer</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>../../../../../Downloads/460177168_1665954550921902_7047727999174566408_n.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_9">
+        <property name="geometry">
+         <rect>
+          <x>640</x>
+          <y>90</y>
+          <width>141</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Rechercher</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>../../../../../Downloads/460563423_1575797083314263_1051363182548254163_n.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>870</x>
+          <y>370</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+        </property>
+        <property name="text">
+         <string>entrer id</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>../../../../../Downloads/461508595_825905609429817_3860263783025879477_n.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="geometry">
+         <rect>
+          <x>810</x>
+          <y>85</y>
+          <width>281</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px; /* Taille de police */
+    border: 2px solid rgb(51, 102, 153); /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 12px; /* Espacement à l'intérieur */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Effet de focus (lorsque l'utilisateur clique dans le champ) */
+QLineEdit:focus {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au focus */
+    background-color: rgb(240, 248, 255); /* Fond légèrement bleu clair */
+    color: rgb(30, 95, 150); /* Texte bleu au focus */
+}
+
+/* Effet au survol (lorsque l'utilisateur passe la souris sur la barre de recherche) */
+QLineEdit:hover {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au survol */
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue au survol */
+    cursor: pointer; /* Curseur de la souris sous forme de main */
+}
+
+/* Lorsque l'utilisateur commence à taper (focus + survol) */
+QLineEdit:active {
+    background-color: rgb(230, 240, 255); /* Fond encore plus clair */
+}
+
+/* Pour le texte d'exemple (placeholder) */
+QLineEdit::placeholder {
+    color: rgb(150, 150, 150); /* Texte gris pour le placeholder */
+    font-style: italic; /* Style italique pour le placeholder */
+}
+</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_afficher">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>230</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Affichage</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>../../../../../Downloads/461508595_825905609429817_3860263783025879477_n.png</normalon>
+         </iconset>
+        </property>
+       </widget>
+       <widget class="QTableView" name="tableView_center">
+        <property name="geometry">
+         <rect>
+          <x>610</x>
+          <y>140</y>
+          <width>651</width>
+          <height>192</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Style de la table QTableWidget */
+QTableWidget {
+    background-color: #ffffff; /* Fond blanc pour la table */
+    border: 2px solid #2980b9; /* Bordure bleue pour délimiter la table */
+    border-radius: 8px; /* Coins arrondis pour une présentation douce */
+    padding: 10px; /* Espacement interne pour éviter que le contenu touche les bords */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre discrète pour ajouter de la profondeur */
+    font-size: 14px; /* Taille de la police pour le contenu de la table */
+    color: rgb(51, 102, 153); /* Couleur du texte pour la lisibilité */
+}
+
+/* Style pour les lignes de la table (QTableWidget::item) */
+QTableWidget::item {
+    padding: 12px; /* Espacement des cellules */
+    border-bottom: 1px solid #f0f0f0; /* Ligne de séparation entre les lignes */
+    background-color: #ffffff; /* Fond blanc pour chaque cellule */
+    transition: background-color 0.3s ease; /* Transition douce pour le survol */
+}
+
+/* Effet de survol sur les cellules */
+QTableWidget::item:hover {
+    background-color: rgb(240, 248, 255); /* Teinte bleue légère sur survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Style des cellules sélectionnées */
+QTableWidget::item:selected {
+    background-color: rgb(51, 102, 153); /* Fond bleu pour la cellule sélectionnée */
+    color: white; /* Texte blanc pour une bonne visibilité */
+    border-radius: 8px; /* Coins arrondis pour la cellule sélectionnée */
+}
+
+/* Style des entêtes de colonnes */
+QHeaderView::section {
+    background-color: #f7f9fc; /* Fond clair pour les entêtes */
+    color: rgb(51, 102, 153); /* Couleur du texte des entêtes */
+    font-weight: bold; /* Mettre en gras les entêtes */
+    padding: 10px; /* Espacement autour du texte des entêtes */
+    border: 1px solid #dcdfe6; /* Bordure légère autour des entêtes */
+    text-align: center; /* Alignement centré du texte */
+}
+
+/* Style des boutons dans les entêtes de colonnes */
+QHeaderView::section:hover {
+    background-color: rgb(240, 248, 255); /* Teinte bleue légère au survol des entêtes */
+    cursor: pointer; /* Curseur en forme de main */
+}
+</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>120</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie */
+    padding: 8px 12px; /* Espacement interne */
+}
+
+</string>
+        </property>
+        <property name="text">
+         <string>id-centre</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_idcenter">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>180</y>
+          <width>241</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px; /* Taille de police */
+    border: 2px solid rgb(51, 102, 153); /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 12px; /* Espacement à l'intérieur */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Effet de focus (lorsque l'utilisateur clique dans le champ) */
+QLineEdit:focus {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au focus */
+    background-color: rgb(240, 248, 255); /* Fond légèrement bleu clair */
+    color: rgb(30, 95, 150); /* Texte bleu au focus */
+}
+
+/* Effet au survol (lorsque l'utilisateur passe la souris sur la barre de recherche) */
+QLineEdit:hover {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au survol */
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue au survol */
+    cursor: pointer; /* Curseur de la souris sous forme de main */
+}
+
+/* Lorsque l'utilisateur commence à taper (focus + survol) */
+QLineEdit:active {
+    background-color: rgb(230, 240, 255); /* Fond encore plus clair */
+}
+
+/* Pour le texte d'exemple (placeholder) */
+QLineEdit::placeholder {
+    color: rgb(150, 150, 150); /* Texte gris pour le placeholder */
+    font-style: italic; /* Style italique pour le placeholder */
+}
+</string>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>50</y>
+          <width>411</width>
+          <height>401</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* Style du groupe de boutons CRUD (QGroupBox) */
+QGroupBox {
+    background-color: #f7f9fc; /* Fond clair pour le groupe */
+    border: 2px solid #2980b9; /* Bordure bleue pour délimiter la zone */
+    border-radius: 10px; /* Coins arrondis pour une touche moderne */
+    padding: 20px; /* Espacement interne pour aérer le contenu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère pour donner de la profondeur */
+    margin: 20px 0; /* Espacement extérieur entre les groupes */
+}
+
+/* Titre du QGroupBox */
+QGroupBox::title {
+    color: rgb(51, 102, 153); /* Couleur du texte du titre du groupe */
+    font-size: 20px; /* Taille du texte */
+    font-weight: bold;
+    padding: 5px; /* Espacement autour du texte du titre */
+    background-color: transparent; /* Aucun fond derrière le titre */
+}
+
+/* Style des boutons CRUD à l'intérieur du QGroupBox */
+QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol sur les boutons */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+        </property>
+        <property name="title">
+         <string>Ajouter un centre d examen</string>
+        </property>
+        <widget class="QPushButton" name="pushButton_annuler">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>350</y>
+           <width>141</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+         </property>
+         <property name="text">
+          <string>annuler -</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normalon>../../../../../Downloads/460563423_1575797083314263_1051363182548254163_n.png</normalon>
+          </iconset>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_ajouter">
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>350</y>
+           <width>141</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+         </property>
+         <property name="text">
+          <string>ajouter +</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normalon>../../../../../Downloads/460563423_1575797083314263_1051363182548254163_n.png</normalon>
+          </iconset>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_8">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>80</y>
+           <width>131</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie */
+    padding: 8px 12px; /* Espacement interne */
+}
+
+</string>
+         </property>
+         <property name="text">
+          <string>nom_centre</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_9">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>140</y>
+           <width>131</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie */
+    padding: 8px 12px; /* Espacement interne */
+}
+
+</string>
+         </property>
+         <property name="text">
+          <string>adresse</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_10">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>280</y>
+           <width>131</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie */
+    padding: 8px 12px; /* Espacement interne */
+}
+
+</string>
+         </property>
+         <property name="text">
+          <string>capacité</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_nom">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>80</y>
+           <width>241</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px; /* Taille de police */
+    border: 2px solid rgb(51, 102, 153); /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 12px; /* Espacement à l'intérieur */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Effet de focus (lorsque l'utilisateur clique dans le champ) */
+QLineEdit:focus {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au focus */
+    background-color: rgb(240, 248, 255); /* Fond légèrement bleu clair */
+    color: rgb(30, 95, 150); /* Texte bleu au focus */
+}
+
+/* Effet au survol (lorsque l'utilisateur passe la souris sur la barre de recherche) */
+QLineEdit:hover {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au survol */
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue au survol */
+    cursor: pointer; /* Curseur de la souris sous forme de main */
+}
+
+/* Lorsque l'utilisateur commence à taper (focus + survol) */
+QLineEdit:active {
+    background-color: rgb(230, 240, 255); /* Fond encore plus clair */
+}
+
+/* Pour le texte d'exemple (placeholder) */
+QLineEdit::placeholder {
+    color: rgb(150, 150, 150); /* Texte gris pour le placeholder */
+    font-style: italic; /* Style italique pour le placeholder */
+}
+</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_adresse">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>140</y>
+           <width>241</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px; /* Taille de police */
+    border: 2px solid rgb(51, 102, 153); /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 12px; /* Espacement à l'intérieur */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Effet de focus (lorsque l'utilisateur clique dans le champ) */
+QLineEdit:focus {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au focus */
+    background-color: rgb(240, 248, 255); /* Fond légèrement bleu clair */
+    color: rgb(30, 95, 150); /* Texte bleu au focus */
+}
+
+/* Effet au survol (lorsque l'utilisateur passe la souris sur la barre de recherche) */
+QLineEdit:hover {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au survol */
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue au survol */
+    cursor: pointer; /* Curseur de la souris sous forme de main */
+}
+
+/* Lorsque l'utilisateur commence à taper (focus + survol) */
+QLineEdit:active {
+    background-color: rgb(230, 240, 255); /* Fond encore plus clair */
+}
+
+/* Pour le texte d'exemple (placeholder) */
+QLineEdit::placeholder {
+    color: rgb(150, 150, 150); /* Texte gris pour le placeholder */
+    font-style: italic; /* Style italique pour le placeholder */
+}
+</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_capacite">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>280</y>
+           <width>241</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px; /* Taille de police */
+    border: 2px solid rgb(51, 102, 153); /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 12px; /* Espacement à l'intérieur */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Effet de focus (lorsque l'utilisateur clique dans le champ) */
+QLineEdit:focus {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au focus */
+    background-color: rgb(240, 248, 255); /* Fond légèrement bleu clair */
+    color: rgb(30, 95, 150); /* Texte bleu au focus */
+}
+
+/* Effet au survol (lorsque l'utilisateur passe la souris sur la barre de recherche) */
+QLineEdit:hover {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au survol */
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue au survol */
+    cursor: pointer; /* Curseur de la souris sous forme de main */
+}
+
+/* Lorsque l'utilisateur commence à taper (focus + survol) */
+QLineEdit:active {
+    background-color: rgb(230, 240, 255); /* Fond encore plus clair */
+}
+
+/* Pour le texte d'exemple (placeholder) */
+QLineEdit::placeholder {
+    color: rgb(150, 150, 150); /* Texte gris pour le placeholder */
+    font-style: italic; /* Style italique pour le placeholder */
+}
+</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_13">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>210</y>
+           <width>131</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie */
+    padding: 8px 12px; /* Espacement interne */
+}
+
+</string>
+         </property>
+         <property name="text">
+          <string>date</string>
+         </property>
+        </widget>
+        <widget class="QDateEdit" name="dateEdit">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>210</y>
+           <width>241</width>
+           <height>41</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>SMS+plannification</string>
+     </attribute>
+     <widget class="QLineEdit" name="lineEdit_13">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>40</y>
+        <width>361</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px; /* Taille de police */
+    border: 2px solid rgb(51, 102, 153); /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 12px; /* Espacement à l'intérieur */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Effet de focus (lorsque l'utilisateur clique dans le champ) */
+QLineEdit:focus {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au focus */
+    background-color: rgb(240, 248, 255); /* Fond légèrement bleu clair */
+    color: rgb(30, 95, 150); /* Texte bleu au focus */
+}
+
+/* Effet au survol (lorsque l'utilisateur passe la souris sur la barre de recherche) */
+QLineEdit:hover {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au survol */
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue au survol */
+    cursor: pointer; /* Curseur de la souris sous forme de main */
+}
+
+/* Lorsque l'utilisateur commence à taper (focus + survol) */
+QLineEdit:active {
+    background-color: rgb(230, 240, 255); /* Fond encore plus clair */
+}
+
+/* Pour le texte d'exemple (placeholder) */
+QLineEdit::placeholder {
+    color: rgb(150, 150, 150); /* Texte gris pour le placeholder */
+    font-style: italic; /* Style italique pour le placeholder */
+}
+</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>70</y>
+        <width>201</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie */
+    padding: 8px 12px; /* Espacement interne */
+}
+
+</string>
+      </property>
+      <property name="text">
+       <string>SMS</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_14">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>270</y>
+        <width>361</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+    color: rgb(51, 102, 153); /* Texte bleu */
+    background-color: white; /* Fond blanc */
+    font-size: 18px; /* Taille de police */
+    border: 2px solid rgb(51, 102, 153); /* Bordure bleue */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 12px; /* Espacement à l'intérieur */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Effet de focus (lorsque l'utilisateur clique dans le champ) */
+QLineEdit:focus {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au focus */
+    background-color: rgb(240, 248, 255); /* Fond légèrement bleu clair */
+    color: rgb(30, 95, 150); /* Texte bleu au focus */
+}
+
+/* Effet au survol (lorsque l'utilisateur passe la souris sur la barre de recherche) */
+QLineEdit:hover {
+    border-color: rgb(30, 95, 150); /* Bordure bleue au survol */
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue au survol */
+    cursor: pointer; /* Curseur de la souris sous forme de main */
+}
+
+/* Lorsque l'utilisateur commence à taper (focus + survol) */
+QLineEdit:active {
+    background-color: rgb(230, 240, 255); /* Fond encore plus clair */
+}
+
+/* Pour le texte d'exemple (placeholder) */
+QLineEdit::placeholder {
+    color: rgb(150, 150, 150); /* Texte gris pour le placeholder */
+    font-style: italic; /* Style italique pour le placeholder */
+}
+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_22">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>340</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    color: rgb(51, 102, 153); /* Texte bleu pour correspondre à la bordure */
+    background-color: white; /* Fond blanc pour l'intérieur du bouton */
+    font-size: 18px;
+    line-height: 1.5;
+    width: 200px;
+    height: 40px;
+    opacity: 0.85; /* Légèrement plus opaque pour un effet sophistiqué */
+    text-align: center;
+    
+    border-style: solid;
+    border-width: 2px; 
+    border-color: rgb(51, 102, 153); /* Bordure bleue, pour un contraste élégant */
+    
+    border-radius: 8px; /* Bordure légèrement arrondie pour un effet doux */
+    padding: 8px 12px; /* Un peu d'espacement pour améliorer le confort */
+    
+    transition: all 0.3s ease; /* Pour une transition fluide des effets */
+}
+
+/* Effet de survol */
+QPushButton:hover {
+    background-color: rgb(240, 248, 255); /* Légère teinte bleue pour le survol */
+    border-color: rgb(30, 95, 150); /* Changement de bordure au survol */
+    color: rgb(30, 95, 150); /* Texte bleu au survol */
+    cursor: pointer; /* Curseur en forme de main */
+}
+
+/* Effet lorsque le bouton est pressé */
+QPushButton:pressed {
+    background-color: rgb(230, 240, 255); /* Teinte encore plus claire au clic */
+    border-color: rgb(20, 80, 130); /* Bordure plus foncée */
+    color: rgb(20, 80, 130); /* Texte plus foncé lors du clic */
+}
+</string>
+      </property>
+      <property name="text">
+       <string>plannification</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normalon>../../../../../Downloads/460563423_1575797083314263_1051363182548254163_n.png</normalon>
+       </iconset>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1548</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
