@@ -5,11 +5,14 @@
 #-------------------------------------------------
 
 QT       += core gui sql
+QT += widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Atelier_Connexion
 TEMPLATE = app
+QT += printsupport
+QT += charts
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -28,12 +31,14 @@ SOURCES += \
     examen.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    qrcode.cpp
 
 HEADERS += \
     examen.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    qrcode.h
 
 FORMS += \
         mainwindow.ui
@@ -42,3 +47,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc

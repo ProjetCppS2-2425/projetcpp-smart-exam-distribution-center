@@ -2,6 +2,7 @@
 #define EXAMEN_H
 
 #include <QString>
+#include <QDate>
 #include <QSqlQuery>
 #include <QTableWidget>
 #include <QHeaderView>
@@ -11,20 +12,24 @@
 class Examen {
 public:
     Examen();
-    Examen(int id, QString titre, QString sujet, QString statut);
-    Examen(QString titre, QString sujet, QString statut);
+    Examen(int id, QString titre, QString sujet, QString statut, QDate date_examen, int id_transport);
+    Examen(QString titre, QString sujet, QString statut, QDate date_examen, int id_transport);
 
     // Getter methods
     int getID() const;
     QString getTitre() const;
     QString getSujet() const;
     QString getStatut() const;
+    QDate getDateExamen() const;
+    int getIdTransport() const;
 
     // Setter methods
     void setID(int id);
     void setTitre(QString titre);
     void setSujet(QString sujet);
     void setStatut(QString statut);
+    void setDateExamen(QDate date_examen);
+    void setIdTransport(int id_transport);
 
     // Database operations
     bool ajouter();
@@ -33,12 +38,15 @@ public:
     bool modifier(int id);
     void rechercherParTitre(QTableWidget *tableWidget, QString titre);
     void Tri(QTableWidget *tableWidget, QString cls, QString champ);
+    QMap<QString, int> getExamCountByStatus();
 
 private:
     int id;
     QString titre;
     QString sujet;
     QString statut;
+    QDate date_examen;
+    int id_transport;
 };
 
 #endif // EXAMEN_H
