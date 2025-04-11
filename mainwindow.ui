@@ -20,7 +20,7 @@
    <widget class="QPushButton" name="rech_res">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>700</x>
       <y>40</y>
       <width>161</width>
       <height>51</height>
@@ -170,7 +170,7 @@ QPushButton:pressed {
    <widget class="QPushButton" name="tri_res">
     <property name="geometry">
      <rect>
-      <x>960</x>
+      <x>1020</x>
       <y>40</y>
       <width>161</width>
       <height>51</height>
@@ -220,7 +220,7 @@ QPushButton:pressed {
    <widget class="QPushButton" name="mod_res">
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>590</x>
       <y>410</y>
       <width>161</width>
       <height>51</height>
@@ -270,7 +270,7 @@ QPushButton:pressed {
    <widget class="QPushButton" name="supp_res">
     <property name="geometry">
      <rect>
-      <x>910</x>
+      <x>820</x>
       <y>410</y>
       <width>161</width>
       <height>51</height>
@@ -320,8 +320,8 @@ QPushButton:pressed {
    <widget class="QTableWidget" name="aff_res">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>110</y>
+      <x>520</x>
+      <y>100</y>
       <width>601</width>
       <height>291</height>
      </rect>
@@ -332,6 +332,7 @@ QTableWidget {
     border: 1px solid #0078D7;
     border-radius: 5px;
     background-color: white;
+	color: rgb(0, 0, 0);
     gridline-color: #E1E1E1;
 }
 
@@ -341,7 +342,7 @@ QTableWidget::item {
 
 QTableWidget::item:selected {
     background-color: #0078D7;
-    color: white;
+    color: black;
 }
 
 /* En-tête du tableau */
@@ -374,12 +375,12 @@ QHeaderView::section {
     </column>
     <column>
      <property name="text">
-      <string>DATE</string>
+      <string>NOTE</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>NOTE</string>
+      <string>DATE</string>
      </property>
     </column>
     <column>
@@ -716,9 +717,10 @@ QLineEdit:focus {
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
     border: 1px solid #0078D7;
-    border-radius: 5px;
-    padding: 5px;</string>
+    padding: 5px;
+    border-radius: 5px;</string>
      </property>
     </widget>
    </widget>
@@ -772,20 +774,74 @@ QPushButton:pressed {
      <string>VISUALISATION GRAPHIQUE</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="linerech_res">
+   <widget class="QLineEdit" name="rechl_res">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>430</x>
       <y>40</y>
-      <width>271</width>
+      <width>241</width>
       <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">    background-color: rgb(240, 248, 255);
-color: rgb(0, 0, 0);
-</string>
+     <string notr="true">QLineEdit {
+	color: rgb(0, 0, 0);
+    border: 1px solid #0078D7;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: white;
+    min-height: 25px;
+}
+
+QLineEdit:focus {
+    border: 2px solid #0078D7;
+    background-color: #F0F8FF;
+}</string>
     </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="Ctri_res">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>40</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">    background-color: rgb(230, 240, 255); 
+    border-color: rgb(20, 80, 130);
+    color: rgb(20, 80, 130)</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>NOTE &gt;</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NOTE &lt;</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>DATE &gt;</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>DATE &lt;</string>
+     </property>
+    </item>
    </widget>
    <zorder>rech_res</zorder>
    <zorder>exp_res</zorder>
@@ -797,7 +853,8 @@ color: rgb(0, 0, 0);
    <zorder>groupBox</zorder>
    <zorder>ajout_res</zorder>
    <zorder>vis_res</zorder>
-   <zorder>linerech_res</zorder>
+   <zorder>rechl_res</zorder>
+   <zorder>Ctri_res</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

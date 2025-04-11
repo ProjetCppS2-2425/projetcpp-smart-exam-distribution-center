@@ -38,5 +38,7 @@ public:
     bool modifier(int ID_ETUDIANT );
     QSqlQueryModel * afficher();
     bool supprimer(int ID_ETUDIANT);
-    };
+    QSqlQueryModel* rechercher(const QString& critere);
+    QSqlQueryModel* trier(const QString& critere, Qt::SortOrder order);
+};
 #endif // RESULTAT_H
