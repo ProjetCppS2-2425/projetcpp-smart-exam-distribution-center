@@ -30,6 +30,14 @@ private slots:
     void on_pushButton_supprimer_clicked();
 
     void on_tableView_center_clicked(const QModelIndex &index);
+    void on_pb_pdf_clicked();
+    void on_rechercherButton_clicked();
+
+    void on_trierButton_clicked();
+
+    //void on_statistiqueButton_centres_clicked();
+    //void on_statistiqueButton_centres_graph_clicked();
+
 
 private:
     Ui::MainWindow *ui;
