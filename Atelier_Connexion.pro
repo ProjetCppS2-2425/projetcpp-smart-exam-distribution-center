@@ -6,7 +6,8 @@
 
 QT       += core gui sql
 QT += widgets
-
+LIBS += -luser32 -lshell32  # Link Windows APIs
+         # Add application icon
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Atelier_Connexion
@@ -32,13 +33,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
-    qrcode.cpp
+    qrcode.cpp \
+    windowsnotifier.cpp
 
 HEADERS += \
     examen.h \
         mainwindow.h \
     connection.h \
-    qrcode.h
+    qrcode.h \
+    windowsnotifier.h
 
 FORMS += \
         mainwindow.ui

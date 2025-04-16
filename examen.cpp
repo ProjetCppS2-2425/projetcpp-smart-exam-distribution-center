@@ -94,13 +94,13 @@ bool Examen::modifier(int id) {
     return query.exec();
 }
 
-void Examen::rechercherParTitre(QTableWidget *tableWidget, QString titre) {
+void Examen::rechercherExamens(QTableWidget *tableWidget, QString searchText) {
     QSqlQuery query;
     query.prepare("SELECT e.id, e.titre, e.sujet, e.statut, e.date_examen, "
                   "t.destination, t.nom_livreur, t.date_livraison "
                   "FROM examen e LEFT JOIN transport t ON e.id_transport = t.id_transport "
-                  "WHERE e.titre LIKE :titre");
-    query.bindValue(":titre", "%" + titre + "%");
+                  "WHERE e.titre LIKE :searchText OR e.sujet LIKE :searchText OR e.statut LIKE :searchText");
+    query.bindValue(":searchText", "%" + searchText + "%");
 
     if (query.exec()) {
         tableWidget->setRowCount(0);
@@ -128,7 +128,7 @@ void Examen::Tri(QTableWidget *tableWidget, QString cls, QString champ) {
     QString queryString = QString("SELECT e.id, e.titre, e.sujet, e.statut, e.date_examen, "
                                   "t.destination, t.nom_livreur, t.date_livraison "
                                   "FROM examen e LEFT JOIN transport t ON e.id_transport = t.id_transport "
-                                  "ORDER BY %1 %2").arg(champ, cls);
+                                  "ORDER BY %1 %2, titre %2").arg(champ, cls);
     QSqlQuery query(queryString);
 
     tableWidget->setRowCount(0);

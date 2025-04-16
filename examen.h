@@ -36,7 +36,7 @@ public:
     void afficher(QTableWidget *tableWidget);
     bool supprimer(int id);
     bool modifier(int id);
-    void rechercherParTitre(QTableWidget *tableWidget, QString titre);
+    void rechercherExamens(QTableWidget *tableWidget, QString searchText);
     void Tri(QTableWidget *tableWidget, QString cls, QString champ);
     QMap<QString, int> getExamCountByStatus();
 

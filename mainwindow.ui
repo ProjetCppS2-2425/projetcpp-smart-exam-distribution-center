@@ -395,6 +395,16 @@ background-color:transparent;
         <string>Sujet</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>Date Examen</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Titre</string>
+       </property>
+      </item>
      </widget>
      <widget class="QPushButton" name="pushButton_6">
       <property name="geometry">

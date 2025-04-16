@@ -275,7 +275,7 @@ void MainWindow::on_suppexamButton_clicked()
 
 void MainWindow::on_lineEdit_10_textChanged(const QString &arg1)
 {
-    examen.rechercherParTitre(ui->tableWidget_examens, arg1);
+    examen.rechercherExamens(ui->tableWidget_examens, arg1);
 }
 
 
@@ -283,15 +283,47 @@ void MainWindow::on_trier_Butoon_clicked()
 {
     // Determine the sort order
     Qt::SortOrder order = Qt::AscendingOrder; // Default to ascending order
+    QString orderText = ui->comboBox_order->currentText();
 
-    if (ui->comboBox_order->currentText().compare("Descendant", Qt::CaseInsensitive) == 0) {
+    if (orderText.compare("Descendant", Qt::CaseInsensitive) == 0) {
         order = Qt::DescendingOrder;
     }
 
     qDebug() << "Order:" << (order == Qt::AscendingOrder ? "Ascendant" : "Descendant");
 
-    // Sort the QTableWidget by the "Sujet" column
-    ui->tableWidget_examens->sortItems(2, order); // Assuming "Sujet" is the 3rd column (index 2)
+    // Determine which column to sort by
+    int sortColumn = -1;
+    QString sortField = ui->comboBoxsortchamp->currentText();
+
+    // Map combo box selections to column indices
+    if (sortField.compare("Titre", Qt::CaseInsensitive) == 0) {
+        sortColumn = 1; // "Titre" is the 2nd column (index 1)
+    }
+    else if (sortField.compare("Sujet", Qt::CaseInsensitive) == 0) {
+        sortColumn = 2; // "Sujet" is the 3rd column (index 2)
+    }
+    else if (sortField.compare("Date Examen", Qt::CaseInsensitive) == 0) {
+        sortColumn = 4; // "Date Examen" is the 5th column (index 4)
+    }
+
+    // Sort the QTableWidget by the selected column
+    if (sortColumn != -1) {
+        ui->tableWidget_examens->sortItems(sortColumn, order);
+
+        // For date columns, ensure proper sorting by setting custom sort role
+        if (sortColumn == 4) { // Date Examen column
+            for (int row = 0; row < ui->tableWidget_examens->rowCount(); ++row) {
+                QTableWidgetItem *item = ui->tableWidget_examens->item(row, sortColumn);
+                if (item) {
+                    item->setData(Qt::UserRole, QDate::fromString(item->text(), "dd/MM/yyyy"));
+                }
+            }
+            ui->tableWidget_examens->sortItems(sortColumn, order);
+        }
+    }
+    else {
+        qDebug() << "Invalid sort column selected";
+    }
 }
 //nheeeb nrawah l medenine X(
 
@@ -541,12 +573,10 @@ void MainWindow::on_pushButton_3_clicked()
 }
 
 
-
 void MainWindow::displayExamStatsChart() {
-    //Clear existing content
-        QLayout *existingLayout = ui->frame->layout();
+    // Clear existing content
+    QLayout *existingLayout = ui->frame->layout();
 
-    // Delete all widgets from the frame
     if (existingLayout) {
         QLayoutItem *item;
         while ((item = existingLayout->takeAt(0)) != nullptr) {
@@ -581,11 +611,17 @@ void MainWindow::displayExamStatsChart() {
     QBarSet *barSet = new QBarSet("Exam Status");
 
     int colorIndex = 0;
+    int maxValue = 0; // Pour stocker la valeur maximale
     for (auto it = stats.begin(); it != stats.end(); ++it) {
         categories << it.key();
         *barSet << it.value();
         barSet->setColor(colors[colorIndex % colors.size()]);
         colorIndex++;
+
+        // Trouver la valeur maximale
+        if (it.value() > maxValue) {
+            maxValue = it.value();
+        }
     }
 
     series->append(barSet);
@@ -608,6 +644,11 @@ void MainWindow::displayExamStatsChart() {
     QValueAxis *axisY = new QValueAxis();
     axisY->setLabelFormat("%d");
     axisY->setTitleText("Number of Exams");
+
+    // Configurer l'échelle de l'axe Y correctement
+    axisY->setRange(0, maxValue + 1); // Ajouter 1 pour un peu d'espace au-dessus
+    axisY->setTickCount(qMin(maxValue + 2, 10)); // Limiter à 10 ticks maximum
+
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
@@ -621,7 +662,5 @@ void MainWindow::displayExamStatsChart() {
 
     // Ensure the frame updates
     ui->frame->update();
-
 }
-
 
