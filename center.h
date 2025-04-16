@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDate>
 #include <QSqlQueryModel>
+#include <QMap>
 
 class center
 {
@@ -30,11 +31,14 @@ public:
     QSqlQueryModel* afficherCenter();
     bool supprimerCenter(int);
     bool modifierCenter(int, QString, QString, QDate, int, int);
-    QSqlQueryModel* rechercher(int);
+    QSqlQueryModel* rechercherMulti(QString recherche);
+    QSqlQueryModel* trierParMultiplesCritères();
     QSqlQueryModel* trierParCapacite();
 
-    void exporterPDF(const QString&, QAbstractItemModel*);
+    void exporterPDF(const QString &nomFichier, QAbstractItemModel *model);
     static QMap<QString, double> obtenirStatistiquesDisponibilite();
+
+    QMap<int, int> getCentersByAvailability();
 
 private:
     int idcenter;

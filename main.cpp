@@ -1,28 +1,52 @@
 #include "mainwindow.h"
-#include <QApplication>
-#include <QMessageBox>
 #include "connexion.h"
+#include <QMessageBox>
+#include <QApplication>
+#include <QFile>
+#include <QRadioButton>
+#include <QTextStream>
+#include <QDebug>
 
+
+
+///// bech ychecki l base de donne tkhdem wlle
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    Connection c;
-    bool test=c.createconnect();
-    if(test)
-    {w.show();
-        QMessageBox::information(nullptr, QObject::tr("database is open"),
-                                 QObject::tr("connection successful.\n"
-                                             "Click Cancel to exit."), QMessageBox::Cancel);
 
+    // Charger le fichier de style QSS
+    QFile file("C:/Users/Wizin/Desktop/amine/untitled1/Perstfic.qss"); // Assurez-vous que le chemin est correct
+    if (file.open(QFile::ReadOnly | QFile::Text)) {
+        QTextStream stream(&file);
+        QString styleSheet = stream.readAll();
+        a.setStyleSheet(styleSheet);
+        file.close();
+    } else {
+        qDebug() << "Impossible d'ouvrir le fichier QSS.";
     }
-    else
-        QMessageBox::critical(nullptr, QObject::tr("database is not open"),
-                              QObject::tr("connection failed.\n"
-                                          "Click Cancel to exit."), QMessageBox::Cancel);
 
 
 
-    return a.exec();
+
+
+
+
+    // Initialize database connection
+    Connection c;
+    if (!c.createconnect()) {
+        QMessageBox::critical(nullptr, QObject::tr("Database Error"),
+                              QObject::tr("Failed to connect to database.\nClick Cancel to exit."),
+                              QMessageBox::Cancel);
+        return 1; // Early exit on database connection failure
+    }
+
+    // Show the main window
+    MainWindow w;
+    w.show();
+    QMessageBox::information(nullptr, QObject::tr("Database Open"),
+                             QObject::tr("Connection successful.\nClick Cancel to exit."),
+                             QMessageBox::Cancel);
+
+    return a.exec(); // Start the event loop
 }

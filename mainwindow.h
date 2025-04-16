@@ -34,10 +34,15 @@ private slots:
     void on_rechercherButton_clicked();
 
     void on_trierButton_clicked();
+    int getCurrentCenterAvailability(int centerId);
+    bool sendCenterStatusSMS(const QString& centerName, int newStatus);
+    void displayAvailabilityStats();
 
     //void on_statistiqueButton_centres_clicked();
     //void on_statistiqueButton_centres_graph_clicked();
 
+
+    void on_pushButton_centre_clicked();
 
 private:
     Ui::MainWindow *ui;

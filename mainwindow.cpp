@@ -3,22 +3,56 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QIntValidator>
-/*#include <QtCharts/QPieSeries>
+#include <QCalendarWidget>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QTextEdit>
+
+
+
+
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+
+#include <QVBoxLayout>
+#include <QLabel>
 #include <QtCharts/QChartView>
-#include <QtCharts/QChart>
-*/
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QValueAxis>
+
+
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QUrl>
+#include <QUrlQuery>
+#include <QAuthenticator>
+#include <QEventLoop>
+#include <QDebug>
+#include <QNetworkRequest>
+#include <QTextEdit>
+#include <QCalendarWidget>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     ui->tableView_center->setModel(C.afficherCenter());
+    displayAvailabilityStats();
 
     ui->lineEdit_capacite->setValidator(new QIntValidator(0, 99, this));
     ui->lineEdit_nom->setMaxLength(10);
     ui->lineEdit_adresse->setMaxLength(10);
-    ui->lineEdit_disponibilite->setMaxLength(1); // On limite la saisie à 1 caractère
+    ui->lineEdit_disponibilite->setMaxLength(1);
+
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +69,7 @@ void MainWindow::on_pushButton_ajouter_clicked()
 {
     QString nom = ui->lineEdit_nom->text();
     QString adresse = ui->lineEdit_adresse->text();
-    QDate datec = ui->dateEdit->date();
+    QDate datec = ui->dateEdit_->date();
     int capacite = ui->lineEdit_capacite->text().toInt();
     int disponibilite = ui->lineEdit_disponibilite->text().toInt();
 
@@ -53,6 +87,7 @@ void MainWindow::on_pushButton_ajouter_clicked()
     bool test = C.ajouterCenter();
 
     if (test) {
+         displayAvailabilityStats();
         QMessageBox::information(this, "Ajout réussi", "L'enregistrement a été ajouté avec succès.");
         ui->tableView_center->setModel(C.afficherCenter());
     } else {
@@ -61,7 +96,7 @@ void MainWindow::on_pushButton_ajouter_clicked()
 
     ui->lineEdit_nom->clear();
     ui->lineEdit_adresse->clear();
-    ui->dateEdit->clear();
+    ui->dateEdit_->clear();
     ui->lineEdit_capacite->clear();
     ui->lineEdit_disponibilite->clear();
 }
@@ -70,7 +105,7 @@ void MainWindow::on_pushButton_annuler_clicked()
 {
     ui->lineEdit_nom->clear();
     ui->lineEdit_adresse->clear();
-    ui->dateEdit->clear();
+    ui->dateEdit_->clear();
     ui->lineEdit_capacite->clear();
     ui->lineEdit_disponibilite->clear();
 }
@@ -80,67 +115,221 @@ void MainWindow::on_pushButton_modifier_clicked()
     int idcenter = ui->lineEdit_idcenter->text().toInt();
     QString nom = ui->lineEdit_nom->text();
     QString adresse = ui->lineEdit_adresse->text();
-    QDate datec = ui->dateEdit->date();
+    QDate datec = ui->dateEdit_->date();
     int capacite = ui->lineEdit_capacite->text().toInt();
-    int disponibilite = ui->lineEdit_disponibilite->text().toInt();
-
+    int newDisponibilite = ui->lineEdit_disponibilite->text().toInt();
+    // Input validation (unchanged)
     if (idcenter <= 0 || nom.isEmpty() || adresse.isEmpty() || capacite <= 0) {
         QMessageBox::critical(this, "Erreur de saisie", "Veuillez remplir tous les champs correctement !");
         return;
     }
-
-    if (disponibilite != 0 && disponibilite != 1) {
+    if (newDisponibilite != 0 && newDisponibilite != 1) {
         QMessageBox::critical(this, "Erreur de saisie", "La disponibilité doit être 1 (disponible) ou 0 (non disponible).");
         return;
     }
-
-     center C(nom, adresse, datec, capacite,disponibilite);
-    bool test = C.modifierCenter(C.getidcenter(), C.getnom(), C.getadresse(), C.getdatec(), C.getcapacite(), C.getdisponibilite());
+    // Get current availability before modification
+    int oldDisponibilite = getCurrentCenterAvailability(idcenter);
+    // Perform modification
+    bool test = C.modifierCenter(idcenter, nom, adresse, datec, capacite, newDisponibilite);
 
     if (test) {
-        QMessageBox::information(this, "Modification réussie", "Les modifications ont été enregistrées.");
+        displayAvailabilityStats();
+        QMessageBox::information(this, "Modification réussie", "Le centre a été modifié avec succès.");
         ui->tableView_center->setModel(C.afficherCenter());
+
+        // Additional notification for availability change
+        if (oldDisponibilite != newDisponibilite) {
+            QString statusMessage = (newDisponibilite == 1)
+            ? "Le centre " + nom + " est maintenant disponible ✅"
+            : "Le centre " + nom + " est maintenant non disponible ❌";
+            QString fullMessage = QString("%1\n\nAdresse: %2\nCapacité: %3 personnes")
+                                      .arg(statusMessage)
+                                      .arg(adresse)
+                                      .arg(capacite);
+            if (!sendCenterStatusSMS(nom, newDisponibilite)) {
+                qDebug() << "Échec d'envoi SMS, mais modification sauvegardée";
+                QMessageBox::warning(this, "Notification SMS",
+                                     "Le statut a été mis à jour mais l'envoi du SMS a échoué");
+            } else {
+                qDebug() << "SMS envoyé avec succès pour le centre" << nom;
+            }
+        }
     } else {
         QMessageBox::critical(this, "Erreur", "La modification a échoué.");
     }
 
+    // Clear fields (unchanged)
     ui->lineEdit_idcenter->clear();
     ui->lineEdit_nom->clear();
     ui->lineEdit_adresse->clear();
-    ui->dateEdit->clear();
+    ui->dateEdit_->clear();
     ui->lineEdit_capacite->clear();
     ui->lineEdit_disponibilite->clear();
+}
+
+// Helper function to get current availability
+int MainWindow::getCurrentCenterAvailability(int centerId)
+{
+    QSqlQuery query;
+    query.prepare("SELECT DISPONIBILITE FROM CENTER WHERE IDCENTER = :id");
+    query.bindValue(":id", centerId);
+
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt();
+    }
+    return -1; // Return -1 if error occurs
 }
 
 void MainWindow::on_pushButton_supprimer_clicked()
 {
     C.setidcenter(ui->lineEdit_idcenter->text().toInt());
     bool test = C.supprimerCenter(C.getidcenter());
-    QMessageBox msgBox;
     if (ui->lineEdit_idcenter->text() == "") {
-        QMessageBox::critical(this, QObject::tr("Suppression Errer"),
-                              QObject::tr("Echec de Suppression!!!\n""Veuillez remplir la label de idcenter"), QMessageBox::Cancel);
+        QMessageBox::critical(this, QObject::tr("Suppression Erreur"),
+                              QObject::tr("Echec de Suppression!!!\n""Veuillez remplir le champ idcenter"), QMessageBox::Cancel);
     } else if (test) {
-        QMessageBox::information(this, QObject::tr("Suppression avec Succes"),
-                                 QObject::tr("Suppression avec succes"), QMessageBox::Cancel);
+            displayAvailabilityStats();
+        QMessageBox::information(this, QObject::tr("Suppression avec Succès"),
+                                 QObject::tr("Suppression avec succès"), QMessageBox::Cancel);
         ui->tableView_center->setModel(C.afficherCenter());
     }
 
     ui->lineEdit_idcenter->clear();
     ui->lineEdit_nom->clear();
     ui->lineEdit_adresse->clear();
-    ui->dateEdit->clear();
+    ui->dateEdit_->clear();
     ui->lineEdit_capacite->clear();
     ui->lineEdit_disponibilite->clear();
 }
 
 void MainWindow::on_tableView_center_clicked(const QModelIndex &index)
 {
+    // Fill the form fields as before
     ui->lineEdit_idcenter->setText(ui->tableView_center->model()->data(ui->tableView_center->model()->index(index.row(), 0)).toString());
     ui->lineEdit_nom->setText(ui->tableView_center->model()->data(ui->tableView_center->model()->index(index.row(), 1)).toString());
     ui->lineEdit_adresse->setText(ui->tableView_center->model()->data(ui->tableView_center->model()->index(index.row(), 2)).toString());
+    ui->dateEdit_->setDate(ui->tableView_center->model()->data(ui->tableView_center->model()->index(index.row(), 3)).toDate());
     ui->lineEdit_capacite->setText(ui->tableView_center->model()->data(ui->tableView_center->model()->index(index.row(), 4)).toString());
     ui->lineEdit_disponibilite->setText(ui->tableView_center->model()->data(ui->tableView_center->model()->index(index.row(), 5)).toString());
+
+    // Check if the clicked cell is in the calendar column (column 6)
+    if (index.column() == 6) {
+        int row = index.row();
+        int centerId = ui->tableView_center->model()->data(ui->tableView_center->model()->index(row, 0)).toInt();
+
+        // Create a calendar dialog
+        QDialog *calendarDialog = new QDialog(this);
+        calendarDialog->setWindowTitle("Examens programmés");
+        calendarDialog->setMinimumSize(600, 400);
+
+        QVBoxLayout *layout = new QVBoxLayout(calendarDialog);
+
+        // Get center name for display
+        QString centerName = ui->tableView_center->model()->data(ui->tableView_center->model()->index(row, 1)).toString();
+        QLabel *titleLabel = new QLabel("Calendrier des examens pour " + centerName);
+        titleLabel->setAlignment(Qt::AlignCenter);
+        layout->addWidget(titleLabel);
+
+        // Create calendar widget
+        QCalendarWidget *calendar = new QCalendarWidget(calendarDialog);
+        layout->addWidget(calendar);
+
+        // Get exam dates from database for this center - NOTE THE CHANGED COLUMN NAME
+        QSqlQuery query;
+        query.prepare("SELECT date_examen FROM examen WHERE id_centre = :id_centre");  // Changed to id_centre
+        query.bindValue(":id_centre", centerId);  // Changed parameter name for clarity
+
+        // Store all exam dates
+        QList<QDate> examDates;
+
+        if (query.exec()) {
+            while (query.next()) {
+                QDate examDate = query.value("date_examen").toDate();
+                examDates.append(examDate);
+            }
+        } else {
+            qDebug() << "Error fetching exam dates:" << query.lastError().text();
+            QMessageBox::warning(this, "Erreur", "Impossible de charger les dates d'examen");
+        }
+
+        // Set up calendar formatting for dates with exams
+        QTextCharFormat examFormat;
+        examFormat.setBackground(QBrush(QColor(100, 250, 100, 100))); // Light green background
+        examFormat.setForeground(QBrush(Qt::darkGreen));              // Dark green text
+        examFormat.setFontWeight(QFont::Bold);
+
+        // Apply formatting to dates with exams
+        for (const QDate &date : examDates) {
+            calendar->setDateTextFormat(date, examFormat);
+        }
+
+        // Add labels showing exam info when a date is clicked
+        QLabel *examInfoLabel = new QLabel("Cliquez sur une date pour voir les détails des examens");
+        examInfoLabel->setAlignment(Qt::AlignCenter);
+        layout->addWidget(examInfoLabel);
+
+        QTextEdit *examDetailsText = new QTextEdit();
+        examDetailsText->setReadOnly(true);
+        examDetailsText->setMaximumHeight(150);
+        layout->addWidget(examDetailsText);
+
+        connect(calendar, &QCalendarWidget::clicked, [=](const QDate &date) {
+            QSqlQuery detailsQuery;
+            QString dateStr = date.toString("yyyy-MM-dd");
+
+            detailsQuery.prepare(
+                "SELECT id, titre, sujet, statut, TO_CHAR(date_examen, 'HH24:MI') as heure "
+                "FROM examen "
+                "WHERE id_centre = :id_centre AND TRUNC(date_examen) = TO_DATE(:date_examen, 'YYYY-MM-DD') "
+                "ORDER BY date_examen");
+            detailsQuery.bindValue(":id_centre", centerId);
+            detailsQuery.bindValue(":date_examen", dateStr);
+
+            QString details = QString("<h3>Examens du %1</h3>").arg(date.toString("dd/MM/yyyy"));
+
+            if (detailsQuery.exec()) {
+                if (detailsQuery.size() == 0) {
+                    details += "<p style='color:gray;'>Aucun examen prévu cette journée</p>";
+                } else {
+                    while (detailsQuery.next()) {
+                        details += "<div style='margin-bottom:15px; padding:5px; background-color:#f5f5f5;'>";
+                        details += QString("<b>%1</b> (ID: %2)<br>")
+                                       .arg(detailsQuery.value("titre").toString())
+                                       .arg(detailsQuery.value("id").toInt());
+                        details += QString("<b>Heure:</b> %1<br>").arg(detailsQuery.value("heure").toString());
+                        details += QString("<b>Sujet:</b> %1<br>").arg(detailsQuery.value("sujet").toString());
+
+                        // Color code the status
+                        QString status = detailsQuery.value("statut").toString();
+                        QString statusColor = "black";
+                        if (status == "planifié") statusColor = "blue";
+                        else if (status == "terminé") statusColor = "green";
+                        else if (status == "annulé") statusColor = "red";
+
+                        details += QString("<b>Statut:</b> <span style='color:%1'>%2</span><br>")
+                                       .arg(statusColor)
+                                       .arg(status);
+
+                        details += "</div>";
+                    }
+                }
+            } else {
+                details += "<p style='color:red;'>Erreur de chargement des détails</p>";
+                qDebug() << "Error fetching exam details:" << detailsQuery.lastError().text();
+            }
+
+            examDetailsText->setHtml(details);
+        });
+
+        // Add a close button
+        QPushButton *closeButton = new QPushButton("Fermer");
+        layout->addWidget(closeButton);
+        connect(closeButton, &QPushButton::clicked, calendarDialog, &QDialog::accept);
+
+        // Show dialog
+        calendarDialog->exec();
+        delete calendarDialog; // Clean up after dialog is closed
+    }
 }
 
 void MainWindow::on_pb_pdf_clicked() {
@@ -154,79 +343,144 @@ void MainWindow::on_pb_pdf_clicked() {
     }
 }
 
-void MainWindow::on_rechercherButton_clicked() {
-    int id = ui->lineEdit_idcenter->text().toInt();  // Récupérer l'ID à partir de l'interface
-    if (id <= 0) {
-        QMessageBox::warning(this, "Erreur", "Veuillez entrer un ID valide (entier positif) pour la recherche.");
-        return;
-    }
+void MainWindow::on_rechercherButton_clicked()
+{
+    QString recherche = ui->lineEdit_recherche_multi->text();
+    QSqlQueryModel* model = C.rechercherMulti(recherche);
+    ui->tableView_center->setModel(model);
 
-    QSqlQueryModel* model = C.rechercher(id);
-
-    if (model && model->rowCount() > 0) {
-        ui->tableView_center->setModel(model);
-        QMessageBox::information(this, "Recherche réussie", "Le centre avec l'ID spécifié a été trouvé.");
-    } else {
-        QMessageBox::warning(this, "Erreur", "Aucun centre trouvé avec cet ID.");
-        delete model;
+    if (model->rowCount() == 0) {
+        QMessageBox::information(this, "Recherche", "Aucun centre ne correspond à votre recherche.");
     }
 }
+
 void MainWindow::on_trierButton_clicked() {
-    ui->tableView_center->setModel(C.trierParCapacite());
-    QMessageBox::information(this, "Tri par Capacité", "Les centres ont été triés du plus grand au plus petit.");
+    ui->tableView_center->setModel(C.trierParMultiplesCritères());
+    QMessageBox::information(this, "Tri effectué", "Les centres ont été triés par capacité et date de création.");
 }
 
-/*void MainWindow::on_statistiqueButton_centres_clicked() {
-    // Appel de la méthode statique pour obtenir les statistiques de disponibilité des centres
-    QMap<QString, double> stats = center::obtenirStatistiquesDisponibilite();
 
-    // Effacer les éléments précédents dans le listWidget
-    ui->listWidget->clear();
 
-    // Ajouter les résultats au listWidget sous forme de pourcentages
-    for (auto it = stats.constBegin(); it != stats.constEnd(); ++it) {
-        QString result = QString("%1 : %2%").arg(it.key()).arg(QString::number(it.value(), 'f', 2));
-        ui->listWidget->addItem(result);
-    }
-   // addToHistory("Statistique des centres en texte", 0);
+bool MainWindow::sendCenterStatusSMS(const QString& centerName, int newStatus)
+{
+    const QString TWILIO_ACCOUNT_SID = "AC31f1268ce2f6a62341a342d17cb39186";
+    const QString TWILIO_AUTH_TOKEN = "d4523496fcb8d795cae2622ac68076c2";
+    const QString TWILIO_PHONE_NUMBER = "+19162326244";
+    const QString TO_PHONE_NUMBER = "+21652551135";
+
+    QString statusText = (newStatus == 1) ? "disponible" : "pas disponible";
+    QString message = QString("Nous vous informons que notre centre \"%1\" est %2.")
+                          .arg(centerName)
+                          .arg(statusText);
+
+    QNetworkAccessManager manager;
+    QUrl url(QString("https://api.twilio.com/2010-04-01/Accounts/%1/Messages.json")
+                 .arg(TWILIO_ACCOUNT_SID));
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QString auth = QString("%1:%2").arg(TWILIO_ACCOUNT_SID).arg(TWILIO_AUTH_TOKEN);
+    request.setRawHeader("Authorization", QString("Basic %1").arg(QString(auth.toUtf8().toBase64())).toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("From", TWILIO_PHONE_NUMBER);
+    params.addQueryItem("To", TO_PHONE_NUMBER);
+    params.addQueryItem("Body", message);
+
+    QNetworkReply* reply = manager.post(request, params.toString().toUtf8());
+
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    bool success = (reply->error() == QNetworkReply::NoError);
+    reply->deleteLater();
+    return success;
 }
-void MainWindow::on_statistiqueButton_centres_graph_clicked() {
-    // Appel de la méthode pour obtenir les statistiques de disponibilité des centres
-    QMap<QString, double> stats = center::obtenirStatistiquesDisponibilite();
 
-    // Calculer le total des centres
-    double totalCenters = 0;
-    for (auto it = stats.constBegin(); it != stats.constEnd(); ++it) {
-        totalCenters += it.value();
-    }
+void MainWindow::displayAvailabilityStats()
+{
 
-    // Vider le layout avant d'ajouter un nouveau graphique
-    QLayoutItem* item;
-    while ((item = ui->verticalLayout->takeAt(0)) != nullptr) {
-        delete item->widget();
-        delete item;
-    }
 
-    // Créer un pie series pour le graphique
-    QPieSeries *series = new QPieSeries();
+        // Get data
+        QMap<int, int> stats = C.getCentersByAvailability();
+        int available = stats.value(1);
+        int unavailable = stats.value(0);
+        int maxValue = qMax(available, unavailable);
 
-    // Ajouter les données de disponibilité dans le graphique avec le pourcentage
-    for (auto it = stats.constBegin(); it != stats.constEnd(); ++it) {
-        QString label = QString("%1: %2%").arg(it.key()).arg(it.value(), 0, 'f', 1);
-        series->append(label, it.value());
-    }
+        // Clear frame
+        QLayout* layout = ui->frame->layout();
+        if (layout) {
+            while (QLayoutItem* item = layout->takeAt(0)) {
+                delete item->widget();
+                delete item;
+            }
+        } else {
+            ui->frame->setLayout(new QVBoxLayout());
+        }
 
-    // Créer un graphique à partir de la série
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Statistiques de disponibilité des centres");
+        // Create chart
+        QBarSet* availableSet = new QBarSet("Disponibles");
+        *availableSet << available;
+        availableSet->setColor(QColor(67, 160, 71));
 
-    // Créer un chart view pour afficher le graphique
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);  // Améliorer l'anti-aliasing
+        QBarSet* unavailableSet = new QBarSet("Non disponibles");
+        *unavailableSet << unavailable;
+        unavailableSet->setColor(QColor(229, 57, 53));
 
-    // Afficher le graphique dans le layout
-    ui->verticalLayout->addWidget(chartView);
-    addToHistory("Statistique des centres par graphe", 0);
+        QBarSeries* series = new QBarSeries();
+        series->append(availableSet);
+        series->append(unavailableSet);
+
+        QChart* chart = new QChart();
+        chart->addSeries(series);
+        chart->setTitle("Centres par disponibilité");
+
+        // Smart Y-axis scaling
+        QValueAxis* axisY = new QValueAxis();
+        axisY->setLabelFormat("%d"); // Force integers
+
+        // Calculate optimal Y-axis max and step
+        int step = 1;
+        int yMax = maxValue;
+
+        if (maxValue > 10) {
+            step = (maxValue <= 20) ? 2 :
+                       (maxValue <= 50) ? 5 :
+                       (maxValue <= 100) ? 10 : 20;
+            yMax = ((maxValue / step) + 1) * step;
+        } else if (maxValue == 0) {
+            yMax = 2; // Show some scale even when zero
+        }
+
+        axisY->setRange(0, yMax);
+        axisY->setTickCount(yMax/step + 1);
+        axisY->setMinorTickCount(0);
+
+        // Configure X-axis
+        QBarCategoryAxis* axisX = new QBarCategoryAxis();
+        axisX->append("Statut");
+        axisX->setLabelsVisible(false); // Hide the single label
+
+        chart->addAxis(axisY, Qt::AlignLeft);
+        chart->addAxis(axisX, Qt::AlignBottom);
+        series->attachAxis(axisY);
+        series->attachAxis(axisX);
+
+        // Display
+        QChartView* chartView = new QChartView(chart);
+        chartView->setRenderHint(QPainter::Antialiasing);
+        chartView->setMinimumSize(400, 300);
+        ui->frame->layout()->addWidget(chartView);
+
+
 }
-*/
+
+
+
+void MainWindow::on_pushButton_centre_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+

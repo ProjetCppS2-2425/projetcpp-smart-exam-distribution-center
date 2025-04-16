@@ -1,6 +1,10 @@
 QT       += core gui sql
+QT       += network
+QT += core gui widgets
+QT += charts
+
  #QT += printsupport
-#QT += charts  #
+#QT += charts  #*
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
