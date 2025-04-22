@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QTextEdit>
+#include <QHorizontalBarSeries>
 
 
 
@@ -39,6 +40,19 @@
 #include <QTextEdit>
 #include <QCalendarWidget>
 
+
+
+
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrinterInfo>
+#include <QtGui/QPainter>
+#include <QtGui/QFont>
+#include <QtCore/QDate>
+#include <QtGui/QPageSize>
+#include <QtSql/QSqlQueryModel>
+#include <QtSql/QSqlQuery>
+#include <QMap>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -52,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEdit_nom->setMaxLength(10);
     ui->lineEdit_adresse->setMaxLength(10);
     ui->lineEdit_disponibilite->setMaxLength(1);
+    connect(ui->pb_pdf, &QPushButton::clicked, this, &MainWindow::on_pb_pdf_clicked);
 
 }
 
@@ -333,15 +348,94 @@ void MainWindow::on_tableView_center_clicked(const QModelIndex &index)
 }
 
 void MainWindow::on_pb_pdf_clicked() {
-    QString nomFichier = QFileDialog::getSaveFileName(this, "Enregistrer le PDF", "", "Fichiers PDF (*.pdf)");
-    if (!nomFichier.isEmpty()) {
-        center centre;
-        QSqlQueryModel *model = centre.afficherCenter();
-        centre.exporterPDF(nomFichier, model);
-        delete model;
-        QMessageBox::information(this, "PDF Créé", "Le fichier PDF du centre a été généré avec succès.");
+    // Get file name and location from user
+    QString fileName = QFileDialog::getSaveFileName(this, "Exporter en PDF",
+                                                    QDir::homePath() + "/centres.pdf",
+                                                    "Fichiers PDF (*.pdf)");
+    if (fileName.isEmpty())
+        return;
+
+    // Initialize PDF printer
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+
+    printer.setOutputFileName(fileName);
+
+    // Initialize painter for PDF
+    QPainter painter;
+    if(!painter.begin(&printer)) {
+        QMessageBox::warning(this, "Export PDF", "Erreur lors de la création du PDF");
+        return;
     }
+
+    // Set up fonts
+    QFont titleFont("Arial", 18, QFont::Bold);
+    QFont headerFont("Arial", 12, QFont::Bold);
+    QFont contentFont("Arial", 10);
+
+    // Get model data
+    QSqlQueryModel* model = C.afficherCenter();
+    int rowCount = model->rowCount();
+    int columnCount = model->columnCount() - 1; // Exclude the calendar column
+
+    // Painting constants
+    int margin = 50;
+    int headerHeight = 50;
+    int rowHeight = 30;
+    int columnWidth = (printer.width() - 2 * margin) / columnCount;
+
+    // Paint title
+    painter.setFont(titleFont);
+    painter.drawText(margin, margin, printer.width() - 2 * margin, headerHeight,
+                     Qt::AlignCenter, "Liste des Centres");
+
+    // Paint header
+    painter.setFont(headerFont);
+    for (int col = 0; col < columnCount; ++col) {
+        QRect headerRect(margin + col * columnWidth, margin + headerHeight,
+                         columnWidth, rowHeight);
+        painter.drawRect(headerRect);
+        painter.drawText(headerRect, Qt::AlignCenter,
+                         model->headerData(col, Qt::Horizontal).toString());
+    }
+
+    // Paint data
+    painter.setFont(contentFont);
+    for (int row = 0; row < rowCount; ++row) {
+        for (int col = 0; col < columnCount; ++col) {
+            QRect cellRect(margin + col * columnWidth,
+                           margin + headerHeight + (row + 1) * rowHeight,
+                           columnWidth, rowHeight);
+            painter.drawRect(cellRect);
+
+            // Format date if it's a date column
+            QString cellData;
+            if (col == 3) { // Date column
+                QDate date = model->data(model->index(row, col)).toDate();
+                cellData = date.toString("dd/MM/yyyy");
+            } else {
+                cellData = model->data(model->index(row, col)).toString();
+            }
+
+            painter.drawText(cellRect, Qt::AlignCenter, cellData);
+        }
+    }
+
+    // Paint footer
+    QString footer = "Document généré le " + QDate::currentDate().toString("dd/MM/yyyy");
+    painter.drawText(margin, printer.height() - margin,
+                     printer.width() - 2 * margin, margin,
+                     Qt::AlignRight | Qt::AlignBottom, footer);
+
+    // End painting
+    painter.end();
+
+    QMessageBox::information(this, "Export PDF", "Le document PDF a été créé avec succès!");
+
+    // Open the PDF
+
 }
+
 
 void MainWindow::on_rechercherButton_clicked()
 {
@@ -353,10 +447,9 @@ void MainWindow::on_rechercherButton_clicked()
         QMessageBox::information(this, "Recherche", "Aucun centre ne correspond à votre recherche.");
     }
 }
-
 void MainWindow::on_trierButton_clicked() {
     ui->tableView_center->setModel(C.trierParMultiplesCritères());
-    QMessageBox::information(this, "Tri effectué", "Les centres ont été triés par capacité et date de création.");
+    QMessageBox::information(this, "Tri effectué", "Les centres ont été triés par capacité croissante, date de création décroissante et nom en ordre alphabétique.");
 }
 
 
@@ -401,81 +494,114 @@ bool MainWindow::sendCenterStatusSMS(const QString& centerName, int newStatus)
 
 void MainWindow::displayAvailabilityStats()
 {
+    // Get data
+    QMap<int, int> stats = C.getCentersByAvailability();
+    int available = stats.value(1);
+    int unavailable = stats.value(0);
+    int total = available + unavailable;
+    int maxValue = qMax(available, unavailable);
 
+    qDebug() << "Stats - Available:" << available << "Unavailable:" << unavailable;
 
-        // Get data
-        QMap<int, int> stats = C.getCentersByAvailability();
-        int available = stats.value(1);
-        int unavailable = stats.value(0);
-        int maxValue = qMax(available, unavailable);
-
-        // Clear frame
-        QLayout* layout = ui->frame->layout();
-        if (layout) {
-            while (QLayoutItem* item = layout->takeAt(0)) {
+    // Clear frame
+    QLayout* layout = ui->frame->layout();
+    if (layout) {
+        QLayoutItem* item;
+        while ((item = layout->takeAt(0))) {
+            if (item->widget()) {
                 delete item->widget();
-                delete item;
             }
-        } else {
-            ui->frame->setLayout(new QVBoxLayout());
+            delete item;
         }
+        delete layout;
+    }
 
-        // Create chart
-        QBarSet* availableSet = new QBarSet("Disponibles");
-        *availableSet << available;
-        availableSet->setColor(QColor(67, 160, 71));
+    // Create new layout
+    QVBoxLayout* newLayout = new QVBoxLayout(ui->frame);
+    ui->frame->setLayout(newLayout);
 
-        QBarSet* unavailableSet = new QBarSet("Non disponibles");
-        *unavailableSet << unavailable;
-        unavailableSet->setColor(QColor(229, 57, 53));
+    // Create chart
+    QBarSet* availableSet = new QBarSet("Disponibles");
+    QBarSet* unavailableSet = new QBarSet("Non disponibles");
 
-        QBarSeries* series = new QBarSeries();
-        series->append(availableSet);
-        series->append(unavailableSet);
+    *availableSet << available;
+    *unavailableSet << unavailable;
 
-        QChart* chart = new QChart();
-        chart->addSeries(series);
-        chart->setTitle("Centres par disponibilité");
+    availableSet->setColor(QColor(67, 160, 71));    // Green
+    unavailableSet->setColor(QColor(229, 57, 53));  // Red
 
-        // Smart Y-axis scaling
-        QValueAxis* axisY = new QValueAxis();
-        axisY->setLabelFormat("%d"); // Force integers
+    QHorizontalBarSeries* series = new QHorizontalBarSeries();
+    series->append(availableSet);
+    series->append(unavailableSet);
+    series->setBarWidth(0.7);  // Make bars wider
 
-        // Calculate optimal Y-axis max and step
-        int step = 1;
-        int yMax = maxValue;
+    QChart* chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("Centres par disponibilité");
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
 
-        if (maxValue > 10) {
-            step = (maxValue <= 20) ? 2 :
-                       (maxValue <= 50) ? 5 :
-                       (maxValue <= 100) ? 10 : 20;
-            yMax = ((maxValue / step) + 1) * step;
-        } else if (maxValue == 0) {
-            yMax = 2; // Show some scale even when zero
-        }
+    // Force minimum chart size
+    chart->setMinimumSize(350, 250);
 
-        axisY->setRange(0, yMax);
-        axisY->setTickCount(yMax/step + 1);
-        axisY->setMinorTickCount(0);
+    // Categories for X axis
+    QStringList categories;
+    categories << "Status";
 
-        // Configure X-axis
-        QBarCategoryAxis* axisX = new QBarCategoryAxis();
-        axisX->append("Statut");
-        axisX->setLabelsVisible(false); // Hide the single label
+    // Configure axes
+    QBarCategoryAxis* axisY = new QBarCategoryAxis();
+    axisY->append(categories);
+    axisY->setLabelsVisible(false);  // Hide category label
 
-        chart->addAxis(axisY, Qt::AlignLeft);
-        chart->addAxis(axisX, Qt::AlignBottom);
-        series->attachAxis(axisY);
-        series->attachAxis(axisX);
+    QValueAxis* axisX = new QValueAxis();
+    axisX->setLabelFormat("%d");
 
-        // Display
-        QChartView* chartView = new QChartView(chart);
-        chartView->setRenderHint(QPainter::Antialiasing);
-        chartView->setMinimumSize(400, 300);
-        ui->frame->layout()->addWidget(chartView);
+    // Calculate optimal axis max and tick count
+    int step = 1;
+    int xMax = maxValue;
 
+    if (maxValue > 10) {
+        step = (maxValue <= 20) ? 2 :
+                   (maxValue <= 50) ? 5 :
+                   (maxValue <= 100) ? 10 : 20;
+        xMax = ((maxValue / step) + 1) * step;
+    } else if (maxValue == 0) {
+        xMax = 2;  // Show some scale even when zero
+    }
 
+    axisX->setRange(0, xMax);
+    axisX->setTickCount(xMax/step + 1);
+    axisX->setMinorTickCount(0);
+
+    chart->addAxis(axisY, Qt::AlignLeft);
+    chart->addAxis(axisX, Qt::AlignBottom);
+
+    series->attachAxis(axisY);
+    series->attachAxis(axisX);
+
+    // Display chart
+    QChartView* chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    // Add chart to layout
+    newLayout->addWidget(chartView);
+
+    // Add text summary
+    QString summaryText = QString("Total: %1 | Disponibles: %2 (%3%) | Non disponibles: %4 (%5%)")
+                              .arg(total)
+                              .arg(available)
+                              .arg(total > 0 ? qRound(available * 100.0 / total) : 0)
+                              .arg(unavailable)
+                              .arg(total > 0 ? qRound(unavailable * 100.0 / total) : 0);
+
+    QLabel* summaryLabel = new QLabel(summaryText);
+    summaryLabel->setAlignment(Qt::AlignCenter);
+    newLayout->addWidget(summaryLabel);
 }
+
+
 
 
 
@@ -483,4 +609,7 @@ void MainWindow::on_pushButton_centre_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
 }
+
+
+
 

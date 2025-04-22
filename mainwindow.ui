@@ -477,7 +477,7 @@ QPushButton:pressed {
          <rect>
           <x>610</x>
           <y>140</y>
-          <width>771</width>
+          <width>971</width>
           <height>221</height>
          </rect>
         </property>
@@ -1158,8 +1158,8 @@ QLineEdit::placeholder {
        <widget class="QPushButton" name="pb_pdf">
         <property name="geometry">
          <rect>
-          <x>1400</x>
-          <y>140</y>
+          <x>1460</x>
+          <y>30</y>
           <width>121</width>
           <height>41</height>
          </rect>
@@ -1218,6 +1218,9 @@ QPushButton:pressed {
           <width>311</width>
           <height>41</height>
          </rect>
+        </property>
+        <property name="placeholderText">
+         <string>(nom,adresse,date)</string>
         </property>
        </widget>
        <widget class="QComboBox" name="comboBox_tri">

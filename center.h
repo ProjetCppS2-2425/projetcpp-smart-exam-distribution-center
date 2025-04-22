@@ -35,10 +35,13 @@ public:
     QSqlQueryModel* trierParMultiplesCritères();
     QSqlQueryModel* trierParCapacite();
 
-    void exporterPDF(const QString &nomFichier, QAbstractItemModel *model);
-    static QMap<QString, double> obtenirStatistiquesDisponibilite();
 
+    static QMap<QString, double> obtenirStatistiquesDisponibilite();
     QMap<int, int> getCentersByAvailability();
+
+
+    void exporterPDF(const QString &filePath, QSqlQueryModel *model);
+
 
 private:
     int idcenter;

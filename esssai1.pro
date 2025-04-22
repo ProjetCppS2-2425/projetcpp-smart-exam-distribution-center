@@ -3,7 +3,7 @@ QT       += network
 QT += core gui widgets
 QT += charts
 
- #QT += printsupport
+ QT += printsupport
 #QT += charts  #*
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
