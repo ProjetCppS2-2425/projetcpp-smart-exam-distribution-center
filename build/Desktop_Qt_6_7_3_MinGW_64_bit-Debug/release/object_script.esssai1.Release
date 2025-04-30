@@ -1,0 +1,11 @@
+release/center.o
+release/connexion.o
+release/examen.o
+release/main.o
+release/mainwindow.o
+release/qrcode.o
+release/resultat.o
+release/stat.o
+release/qrc_Resources.o
+release/moc_mainwindow.o
+release/moc_stat.o

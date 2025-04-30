@@ -3,7 +3,7 @@ QT       += network
 QT += core gui widgets
 QT += charts
 
- #QT += printsupport
+ QT += printsupport
 #QT += charts  #*
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -17,13 +17,19 @@ CONFIG += c++17
 SOURCES += \
     center.cpp \
     connexion.cpp \
+    examen.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qrcode.cpp \
+    resultat.cpp
 
 HEADERS += \
     center.h \
     connexion.h \
-    mainwindow.h
+    examen.h \
+    mainwindow.h \
+    qrcode.h \
+    resultat.h
 
 FORMS += \
     mainwindow.ui
@@ -36,4 +42,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     ../bg/bg.qrc \
     ../bg/bg.qrc \
-    ../bg/bg.qrc
+    ../bg/bg.qrc \
+    Resources.qrc

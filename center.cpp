@@ -12,6 +12,17 @@
 #include <QMessageBox>
 #include <QSqlError>
 
+
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrinterInfo>
+#include <QtGui/QPainter>
+#include <QtGui/QFont>
+#include <QtCore/QDate>
+#include <QtGui/QPageSize>
+#include <QtSql/QSqlQueryModel>
+#include <QtSql/QSqlQuery>
+#include <QMap>
+
 center::center()
 {
     idcenter = 0;
@@ -121,76 +132,38 @@ QSqlQueryModel* center::trierParMultiplesCritères()
     model->setQuery("SELECT * FROM center ORDER BY capacite ASC, datec DESC");
     return model;
 }
-void center::exporterPDF(const QString &nomFichier, QAbstractItemModel *model)
-{
-    QPdfWriter pdfWriter(nomFichier);
-    QPainter painter(&pdfWriter);
-
-    // Title and metadata
-    painter.setPen(Qt::black);
-    painter.setFont(QFont("Arial", 16));
-    painter.drawText(2000, 1100, "Liste des Centres");
-    painter.setFont(QFont("Arial", 10));
-    painter.drawText(2000, 1200, "Exporté le: " + QDate::currentDate().toString("dd-MM-yyyy"));
-
-    // Table headers and body
-    int startX = 200;
-    int startY = 1800;
-    int cellWidth = 1100;
-    int cellHeight = 450;
-
-    QStringList headers = {"ID", "Nom", "Adresse", "Date", "Capacité", "Disponibilité"};
-    painter.setFont(QFont("Arial", 10, QFont::Bold));
-
-    for (int col = 0; col < headers.size(); ++col) {
-        painter.drawText(startX + col * cellWidth, startY, cellWidth, cellHeight, Qt::AlignCenter, headers[col]);
-        painter.drawRect(startX + col * cellWidth, startY, cellWidth, cellHeight);
-    }
-
-    // Table rows
-    painter.setFont(QFont("Arial", 10));
-    int rowCount = model->rowCount();
-    for (int row = 0; row < rowCount; ++row) {
-        QColor bgColor = (row % 2 == 0) ? Qt::lightGray : Qt::white;
-
-        for (int col = 0; col < headers.size(); ++col) {
-            QString data = model->data(model->index(row, col)).toString();
-            QRect cellRect(startX + col * cellWidth, startY + (row + 1) * cellHeight, cellWidth, cellHeight);
-
-            painter.fillRect(cellRect, bgColor);
-            painter.drawText(cellRect, Qt::AlignCenter, data);
-            painter.drawRect(cellRect);
-        }
-    }
-
-    // Summary
-    painter.setFont(QFont("Arial", 10, QFont::Bold));
-    painter.drawText(2000, startY + (rowCount + 1) * cellHeight + 200, "Résumé:");
-    painter.setFont(QFont("Arial", 10));
-    painter.drawText(2000, startY + (rowCount + 2) * cellHeight + 200, "Nombre total de centres: " + QString::number(rowCount));
-}
 
 QMap<int, int> center::getCentersByAvailability()
 {
-    QMap<int, int> availabilityStats;
+    QMap<int, int> stats;
+
+    // Initialize with zero values to handle case where query returns no results
+    stats.insert(1, 0); // Available (disponibilite = 1)
+    stats.insert(0, 0); // Unavailable (disponibilite = 0)
 
     QSqlQuery query;
-    // Count centers by disponibilite status
-    query.prepare("SELECT disponibilite, COUNT(*) FROM center GROUP BY disponibilite");
 
-    if (query.exec()) {
-        while (query.next()) {
-            int status = query.value(0).toInt();
-            int count = query.value(1).toInt();
-            availabilityStats[status] = count;
+    // Count available centers (disponibilite = 1)
+    if (query.exec("SELECT COUNT(*) FROM center WHERE disponibilite = 1")) {
+        if (query.next()) {
+            stats[1] = query.value(0).toInt();
         }
     } else {
-        qDebug() << "Error fetching availability stats:" << query.lastError().text();
+        qDebug() << "Error querying available centers:" << query.lastError().text();
     }
 
-    // Ensure all statuses are represented (0 and 1)
-    if (!availabilityStats.contains(0)) availabilityStats[0] = 0;
-    if (!availabilityStats.contains(1)) availabilityStats[1] = 0;
+    // Count unavailable centers (disponibilite = 0)
+    if (query.exec("SELECT COUNT(*) FROM center WHERE disponibilite = 0")) {
+        if (query.next()) {
+            stats[0] = query.value(0).toInt();
+        }
+    } else {
+        qDebug() << "Error querying unavailable centers:" << query.lastError().text();
+    }
 
-    return availabilityStats;
+    // Add debug output
+    qDebug() << "Centers with disponibilite=1:" << stats[1];
+    qDebug() << "Centers with disponibilite=0:" << stats[0];
+
+    return stats;
 }

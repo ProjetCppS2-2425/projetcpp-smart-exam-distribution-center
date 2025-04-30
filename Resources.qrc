@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/notification.png</file>
+        <file>icons/BG.png</file>
+    </qresource>
+</RCC>
